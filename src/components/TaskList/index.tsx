@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { FlatList, Text, View, TextStyle, TouchableOpacity } from 'react-native';
 import { Feather, Octicons } from '@expo/vector-icons'
 
+import { Colors } from '../../utils/Colors';
 import { styles } from './styles';
 
 type Task = {
@@ -38,21 +39,21 @@ export const TaskList: React.FC<Props> = ({ tasks = [], onToggleTask, onDeleteTa
   return (
     <>
       <View style={styles.header}>
-        <CountItems name='Created' nameColor='#4EA8DE' count={tasks.length} />
-        <CountItems name='Finished' nameColor='#8284FA' count={finishedCount} />
+        <CountItems name='Created' nameColor={Colors.blue} count={tasks.length} />
+        <CountItems name='Finished' nameColor={Colors.purple} count={finishedCount} />
       </View>
       <FlatList
         data={tasks}
         keyExtractor={item => item.id}
         renderItem={({ item }) => {
-          const finishedTaskstyle: TextStyle = item.finished ? { color: '#808080', textDecorationLine: 'line-through' } : {};
+          const finishedTaskstyle: TextStyle = item.finished ? { color: Colors.gray300, textDecorationLine: 'line-through' } : {};
           return (
             <View style={styles.taskContainer}>
               <TouchableOpacity onPress={() => onToggleTask(item.id)}>
                 <Octicons
                   size={18}
                   name={item.finished ? 'check-circle-fill' : 'circle'}
-                  color={item.finished ? '#5E60CE' : '#4EA8DE'}
+                  color={item.finished ? Colors.purpleDark : Colors.blue}
                 />
               </TouchableOpacity>
               <Text style={{ ...styles.taskTextBase, ...finishedTaskstyle }}>
@@ -62,7 +63,7 @@ export const TaskList: React.FC<Props> = ({ tasks = [], onToggleTask, onDeleteTa
                 <Feather
                   size={18}
                   name='trash-2'
-                  color='#808080'
+                  color={Colors.gray300}
                 />
               </TouchableOpacity>
             </View>
