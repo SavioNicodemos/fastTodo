@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Image } from 'expo-image';
 
@@ -51,12 +52,37 @@ export const Home: React.FC = () => {
   const handleAddTask = (task: string) => {
     if (task.trim() !== '') {
       const id = new Date().getTime().toString();
-      console.log(id);
-      console.log(typeof id);
       const newTask = { id, task, finished: false };
       setTasks(prevState => [newTask, ...prevState])
     }
   };
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const storedTasks = await AsyncStorage.getItem('@tasks');
+        if (storedTasks) {
+          setTasks(JSON.parse(storedTasks));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadTasks();
+  }, []);
+
+  useEffect(() => {
+    const saveTasks = async () => {
+      try {
+        await AsyncStorage.setItem('@tasks', JSON.stringify(tasks));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    saveTasks();
+  }, [tasks]);
 
   return (
     <>
