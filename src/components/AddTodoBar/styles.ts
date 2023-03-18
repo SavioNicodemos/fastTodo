@@ -15,7 +15,9 @@ export const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     backgroundColor: Colors.gray400,
-    color: Colors.gray100
+    color: Colors.gray100,
+    borderWidth: 1,
+    borderColor: Colors.gray300
   },
   iconContainer: {
     width: 52,
