@@ -13,33 +13,7 @@ type Task = {
 }
 
 export const Home: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: '1',
-      task: "Add car items asd asd asdfasd fas df asdf asdf as df as",
-      finished: false
-    },
-    {
-      id: '2',
-      task: "Add car items asd asd asdfasd fas df asdf asdf as df as",
-      finished: false
-    },
-    {
-      id: '3',
-      task: "Add car items",
-      finished: false
-    },
-    {
-      id: '4',
-      task: "Add car items",
-      finished: true
-    },
-    {
-      id: '5',
-      task: "Add car items",
-      finished: true
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const handleToggleTask = (id: string) => {
     const taskIndex = tasks.findIndex(task => task.id === id);
@@ -73,7 +47,17 @@ export const Home: React.FC = () => {
       ]
     );
   };
-  
+
+  const handleAddTask = (task: string) => {
+    if (task.trim() !== '') {
+      const id = new Date().getTime().toString();
+      console.log(id);
+      console.log(typeof id);
+      const newTask = { id, task, finished: false };
+      setTasks(prevState => [newTask, ...prevState])
+    }
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -84,7 +68,7 @@ export const Home: React.FC = () => {
         />
       </View>
       <View style={styles.main}>
-        <AddTodoBar />
+        <AddTodoBar onAddPress={handleAddTask} />
         <TaskList tasks={tasks} onToggleTask={handleToggleTask} onDeleteTask={handleDeleteTask} />
       </View>
     </>
