@@ -10,7 +10,7 @@ type Task = {
 }
 
 type Props = {
-  tasks: Task[] | [],
+  tasks: Task[],
 }
 
 type CountItemsProps = {
@@ -31,11 +31,12 @@ const CountItems: React.FC<CountItemsProps> = ({ name, count, nameColor }: Count
 )
 
 export const TaskList: React.FC<Props> = ({ tasks = [] }: Props) => {
+  const finishedCount = tasks.reduce((acc: number, cur: Task) => acc + (cur.finished ? 1 : 0), 0);
   return (
     <>
       <View style={styles.header}>
-        <CountItems name='Created' nameColor='#4EA8DE' count={0} />
-        <CountItems name='Finished' nameColor='#8284FA' count={0} />
+        <CountItems name='Created' nameColor='#4EA8DE' count={tasks.length} />
+        <CountItems name='Finished' nameColor='#8284FA' count={finishedCount} />
       </View>
       <FlatList
         data={tasks}

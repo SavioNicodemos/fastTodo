@@ -12,16 +12,16 @@ type Task = {
   finished: boolean
 }
 const tasks: Task[] = [
-  // {
-  //   id: '1',
-  //   task: "Add house items",
-  //   finished: false
-  // },
-  // {
-  //   id: '2',
-  //   task: "Add car items",
-  //   finished: true
-  // },
+  {
+    id: '1',
+    task: "Add house items",
+    finished: false
+  },
+  {
+    id: '2',
+    task: "Add car items",
+    finished: true
+  },
 ]
 
 export const Home: React.FC = () => {
@@ -37,7 +37,6 @@ export const Home: React.FC = () => {
       <View style={styles.main}>
         <AddTodoBar />
         <TaskList tasks={tasks} />
-
       </View>
     </>
   );
