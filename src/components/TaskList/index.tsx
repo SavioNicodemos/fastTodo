@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { FlatList, Text, View, TextStyle } from 'react-native';
+import { FlatList, Text, View, TextStyle, TouchableOpacity } from 'react-native';
 import { Feather, Octicons } from '@expo/vector-icons'
 
 import { styles } from './styles';
@@ -12,6 +12,8 @@ type Task = {
 
 type Props = {
   tasks: Task[],
+  onToggleTask: (id: string) => void,
+  onDeleteTask: (id: string) => void,
 }
 
 type CountItemsProps = {
@@ -31,7 +33,7 @@ const CountItems: React.FC<CountItemsProps> = ({ name, count, nameColor }: Count
   </View>
 )
 
-export const TaskList: React.FC<Props> = ({ tasks = [] }: Props) => {
+export const TaskList: React.FC<Props> = ({ tasks = [], onToggleTask, onDeleteTask }: Props) => {
   const finishedCount = tasks.reduce((acc: number, cur: Task) => acc + (cur.finished ? 1 : 0), 0);
   return (
     <>
@@ -43,22 +45,26 @@ export const TaskList: React.FC<Props> = ({ tasks = [] }: Props) => {
         data={tasks}
         keyExtractor={item => item.id}
         renderItem={({ item }) => {
-          const finishedTaskstyle: TextStyle = item.finished ? { color: '#808080', textDecorationLine: 'line-through'  } : {};
+          const finishedTaskstyle: TextStyle = item.finished ? { color: '#808080', textDecorationLine: 'line-through' } : {};
           return (
             <View style={styles.taskContainer}>
-              <Octicons
-                size={18}
-                name={item.finished ? 'check-circle-fill' : 'circle'}
-                color={item.finished ? '#5E60CE' : '#4EA8DE'}
-              />
-              <Text style={{ ...styles.taskTextBase, ...finishedTaskstyle}}>
+              <TouchableOpacity onPress={() => onToggleTask(item.id)}>
+                <Octicons
+                  size={18}
+                  name={item.finished ? 'check-circle-fill' : 'circle'}
+                  color={item.finished ? '#5E60CE' : '#4EA8DE'}
+                />
+              </TouchableOpacity>
+              <Text style={{ ...styles.taskTextBase, ...finishedTaskstyle }}>
                 {item.task}
               </Text>
-              <Feather
-                size={18}
-                name='trash-2'
-                color='#808080'
-              />
+              <TouchableOpacity onPress={() => onDeleteTask(item.id)}>
+                <Feather
+                  size={18}
+                  name='trash-2'
+                  color='#808080'
+                />
+              </TouchableOpacity>
             </View>
           )
         }}
