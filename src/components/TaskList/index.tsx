@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, TextStyle } from 'react-native';
+import { Feather, Octicons } from '@expo/vector-icons'
 
 import { styles } from './styles';
 
@@ -24,7 +25,7 @@ const CountItems: React.FC<CountItemsProps> = ({ name, count, nameColor }: Count
     <Text style={{ ...styles.baseText, color: nameColor }}>
       {name}
     </Text>
-    <Text style={{...styles.baseText, ...styles.countItemsCounter}}>
+    <Text style={{ ...styles.baseText, ...styles.countItemsCounter }}>
       {count}
     </Text>
   </View>
@@ -41,7 +42,26 @@ export const TaskList: React.FC<Props> = ({ tasks = [] }: Props) => {
       <FlatList
         data={tasks}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Text>{item.id}, {item.task} and {item.finished ? 'true' : 'false'}</Text>}
+        renderItem={({ item }) => {
+          const finishedTaskstyle: TextStyle = item.finished ? { color: '#808080', textDecorationLine: 'line-through'  } : {};
+          return (
+            <View style={styles.taskContainer}>
+              <Octicons
+                size={18}
+                name={item.finished ? 'check-circle-fill' : 'circle'}
+                color={item.finished ? '#5E60CE' : '#4EA8DE'}
+              />
+              <Text style={{ ...styles.taskTextBase, ...finishedTaskstyle}}>
+                {item.task}
+              </Text>
+              <Feather
+                size={18}
+                name='trash-2'
+                color='#808080'
+              />
+            </View>
+          )
+        }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
           <View style={styles.noTaskContainer}>

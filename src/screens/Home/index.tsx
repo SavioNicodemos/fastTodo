@@ -14,11 +14,26 @@ type Task = {
 const tasks: Task[] = [
   {
     id: '1',
-    task: "Add house items",
+    task: "Add car items asd asd asdfasd fas df asdf asdf as df as",
     finished: false
   },
   {
     id: '2',
+    task: "Add car items asd asd asdfasd fas df asdf asdf as df as",
+    finished: false
+  },
+  {
+    id: '3',
+    task: "Add car items",
+    finished: false
+  },
+  {
+    id: '4',
+    task: "Add car items",
+    finished: true
+  },
+  {
+    id: '5',
     task: "Add car items",
     finished: true
   },
